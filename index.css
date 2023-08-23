@@ -1,0 +1,58 @@
+/* @import url(small.css) (min-width:0px);
+@import url(large.css) (min-width:900px); */
+
+:root {
+  --main-bg-color: rgb(35, 35, 35);
+  --main-text-color: rgb(255 255 255);
+  --alt-bg-color: rgb(223 223 223);
+}
+
+html {
+  display: block;
+  width: 100%;
+}
+
+body {
+  background-color: rgb(35, 35, 35);
+  color: #f9faffde;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  text-shadow: #858ebc -2px 2px 8px;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row;
+  width: 70vw;
+  margin-top: 25vh;
+}
+
+li {
+  line-height: 22px;
+  padding-bottom: 12px;
+  font-size: 24px;
+  list-style-type: auto;
+}
+
+#left::after, #right::after {
+  content: "|";
+  animation: 1s blink step-end infinite;
+}
+
+@keyframes blink {
+  from, to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+#right {
+  font-style: italic;
+  text-align: left;
+}
