@@ -13,6 +13,9 @@ window.addEventListener("load", () => {
     if (chancey && Math.random() > 0.5) return "";
     let word = arr[getRandomInt(0,arr.length)];
     while (list.innerText.includes(word)) word = arr[getRandomInt(0,arr.length)];
+    if (arr == timeUnits) {
+      return word.includes("in") ? " " + word : word.includes("a ") ? ", " + word : " in a " + " " + word;
+    }
     return word;
   }
 
@@ -44,19 +47,23 @@ window.addEventListener("load", () => {
   });
   fetch ("https://raw.githubusercontent.com/dariusk/corpora/master/data/words/nouns.json").then((file) => file.json()).then((d) => {
     nouns = d.nouns;
+
+    let listLength = getRandomInt(0, 7);
+    const label = document.createElement("h1");
+    label.innerHTML = `rules of ${getRandomWord(nouns)}`;
+    list.appendChild(label);
+  
+    int = setInterval(() => {
+      // typewrite();
+      const li = document.createElement("li");
+      li.innerHTML = `${getRandomWord(verbs)} ${getRandomWord(prepositions, true)} ${getRandomWord(nouns, true)}${getRandomWord(timeUnits, true)}`;
+      list.appendChild(li);
+      listLength--;
+      if (listLength < 0) clearInterval(int);
+    }, 1200);
   });
   fetch ("https://raw.githubusercontent.com/dariusk/corpora/master/data/words/prepositions.json").then((file) => file.json()).then((d) => {
     prepositions = d.prepositions;
   });
 
-  let listLength = getRandomInt(0, 7);
-  int = setInterval(() => {
-    // typewrite();
-    const li = document.createElement("li");
-    let w = getRandomWord(timeUnits, true);
-    li.innerHTML = `${getRandomWord(verbs)} ${getRandomWord(prepositions, true)} ${getRandomWord(nouns, true)} ${ w ? "in a " + w : " " }`;
-    list.appendChild(li);
-    listLength--;
-    if (listLength < 0) clearInterval(int);
-  }, 1200);
 });

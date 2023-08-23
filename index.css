@@ -38,7 +38,7 @@ li {
   list-style-type: auto;
 }
 
-#left::after, #right::after {
+ul::after {
   content: "|";
   animation: 1s blink step-end infinite;
 }
@@ -50,9 +50,4 @@ li {
   50% {
     opacity: 1;
   }
-}
-
-#right {
-  font-style: italic;
-  text-align: left;
 }
