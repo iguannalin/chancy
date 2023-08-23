@@ -13,7 +13,7 @@ window.addEventListener("load", () => {
     if (chancey && Math.random() > chancey) return "";
     let word = arr[getRandomInt(0,arr.length)];
     while (list.innerText.includes(word)) word = arr[getRandomInt(0,arr.length)];
-    word = word.replace(' ', '-');
+    word = word.replaceAll(' ', '-');
     if (arr == timeUnits) {
       return '-' + (word.includes("in") ? word : word.includes("a ") ? ",-" + word : "in-a-" + word);
     }
