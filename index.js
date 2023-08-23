@@ -9,33 +9,31 @@ window.addEventListener("load", () => {
   let r = getRandomInt(7, 20);
   const list = document.getElementById("list");
 
-  function getRandomWord(arr, chancey) {
-    if (chancey && Math.random() > 0.5) return "";
+  function getRandomWord(arr, chancey = 0, isLabel = false) {
+    if (chancey && Math.random() > chancey) return "";
     let word = arr[getRandomInt(0,arr.length)];
     while (list.innerText.includes(word)) word = arr[getRandomInt(0,arr.length)];
+    word = word.replace(' ', '-');
     if (arr == timeUnits) {
-      return word.includes("in") ? " " + word : word.includes("a ") ? ", " + word : " in a " + " " + word;
+      return '-' + (word.includes("in") ? word : word.includes("a ") ? ",-" + word : "in-a-" + word);
     }
-    return word;
+    return isLabel ? word : ('-' + word);
   }
 
-  function typewrite() {
-    if (r > 0) {
-      let rword = words[getRandomInt(0, words.length)];
-      while (poem.includes(rword)) rword = words[getRandomInt(0, words.length)];
-      poem.push(rword);
-      let wt = 0;
-      rword.split("").forEach((l, index) => {
+  function typewrite(sentence, t) {
+    if (!sentence) return;
+    console.log({sentence});
+    let islandtime = 0;
+    const li = document.createElement("li");
+    sentence.split("").forEach((word) => {
+      word.split(" ").forEach((letter) => {
         setTimeout(() => {
-          if (index == rword.length - 1) l += "&nbsp;";
-          list.innerHTML += l;
-          list.style.maxWidth = "50%";
-        }, wt+=getRandomInt(75, 250));
+          if (letter == '-') li.innerHTML += "&nbsp;";
+          else li.innerHTML += letter;
+        }, islandtime = islandtime < t ? islandtime + getRandomInt(0,t/sentence.length) : 1);
       });
-      r--;
-    } else {
-      clearInterval(int);
-    }
+    });
+    list.appendChild(li);
   }
   
   // amazing corpora of words -- https://github.com/dariusk/corpora/tree/master/data/words
@@ -45,25 +43,22 @@ window.addEventListener("load", () => {
   fetch ("https://raw.githubusercontent.com/dariusk/corpora/master/data/words/verbs.json").then((file) => file.json()).then((d) => {
     verbs = d.verbs.map((item) => item.present);
   });
-  fetch ("https://raw.githubusercontent.com/dariusk/corpora/master/data/words/nouns.json").then((file) => file.json()).then((d) => {
-    nouns = d.nouns;
-
-    let listLength = getRandomInt(0, 7);
-    const label = document.createElement("h1");
-    label.innerHTML = `rules of ${getRandomWord(nouns)}`;
-    list.appendChild(label);
-  
-    int = setInterval(() => {
-      // typewrite();
-      const li = document.createElement("li");
-      li.innerHTML = `${getRandomWord(verbs)} ${getRandomWord(prepositions, true)} ${getRandomWord(nouns, true)}${getRandomWord(timeUnits, true)}`;
-      list.appendChild(li);
-      listLength--;
-      if (listLength < 0) clearInterval(int);
-    }, 1200);
-  });
   fetch ("https://raw.githubusercontent.com/dariusk/corpora/master/data/words/prepositions.json").then((file) => file.json()).then((d) => {
     prepositions = d.prepositions;
   });
+  fetch ("https://raw.githubusercontent.com/dariusk/corpora/master/data/words/nouns.json").then((file) => file.json()).then((d) => {
+    nouns = d.nouns;
 
+    let listLength = getRandomInt(2, 9);
+    const label = document.createElement("h1");
+    label.innerHTML = `rules of ${getRandomWord(nouns, 0, true)}`;
+    list.appendChild(label);
+
+    const time = 1200;
+    int = setInterval(() => {
+      typewrite(`${getRandomWord(verbs)} ${getRandomWord(prepositions, 0.4)} ${getRandomWord(nouns, 0.4)} ${getRandomWord(timeUnits, 0.7)}`, time);
+      listLength--;
+      if (listLength < 0) clearInterval(int);
+    }, time);
+  });
 });

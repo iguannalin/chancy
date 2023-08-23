@@ -38,7 +38,8 @@ li {
   list-style-type: auto;
 }
 
-ul::after {
+li:last-child::after {
+  font-size: 28px;
   content: "|";
   animation: 1s blink step-end infinite;
 }
