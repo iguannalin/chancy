@@ -34,7 +34,7 @@ body {
 
 h1 {
   font-size: 1.5em;
-  margin: 0 -19px 26px;
+   margin: 0 0 26px;
   text-align: left;
   font-weight: normal;
   text-transform: uppercase;
@@ -46,7 +46,7 @@ li::marker {
 
 li {
   line-height: 1em;
-  padding: 0 0 24px 8px;
+  margin: 0 0 24px 8px;
   font-size: 1.2em;
   list-style-type: auto;
   width: 27ch;
