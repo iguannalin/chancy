@@ -27,15 +27,34 @@ body {
   justify-content: center;
   align-items: center;
   flex-flow: row;
-  width: 70vw;
-  margin-top: 25vh;
+  margin-top: 20vh;
+  width: 80vw;
+  text-align: left;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin: 0 -19px 26px;
+  text-align: left;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+li::marker {
+  font-style: italic;
 }
 
 li {
-  line-height: 22px;
-  padding-bottom: 12px;
-  font-size: 24px;
+  line-height: 1em;
+  padding: 0 0 24px 8px;
+  font-size: 1.2em;
   list-style-type: auto;
+  width: 26ch;
+  max-width: 80vw;
+  overflow-wrap: anywhere;
+  white-space: break-spaces;
+  hyphenate-character: '-';
+  hyphens: auto;
 }
 
 li:last-child::after {

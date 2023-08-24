@@ -49,12 +49,13 @@ window.addEventListener("load", () => {
   fetch ("https://raw.githubusercontent.com/dariusk/corpora/master/data/words/nouns.json").then((file) => file.json()).then((d) => {
     nouns = d.nouns;
 
-    let listLength = getRandomInt(2, 9);
+    let listLength = getRandomInt(2, 8);
     const label = document.createElement("h1");
     label.innerHTML = `rules of ${getRandomWord(nouns, 0, true)}`;
     list.appendChild(label);
-
+    
     const time = 1200;
+    typewrite(`${getRandomWord(verbs)} ${getRandomWord(prepositions, 0.4)} ${getRandomWord(nouns, 0.4)} ${getRandomWord(timeUnits, 0.7)}`, time);
     int = setInterval(() => {
       typewrite(`${getRandomWord(verbs)} ${getRandomWord(prepositions, 0.4)} ${getRandomWord(nouns, 0.4)} ${getRandomWord(timeUnits, 0.7)}`, time);
       listLength--;
