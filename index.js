@@ -10,19 +10,18 @@ window.addEventListener("load", () => {
   const list = document.getElementById("list");
 
   function getRandomWord(arr, chancey = 0, isLabel = false) {
-    if (chancey && Math.random() > chancey) return "";
+    if (!arr || (chancey && Math.random() > chancey)) return "";
     let word = arr[getRandomInt(0,arr.length)];
-    while (list.innerText.includes(word)) word = arr[getRandomInt(0,arr.length)];
+    while (!word || list.innerText.includes(word)) word = arr[getRandomInt(0,arr.length)];
     word = word.replaceAll(' ', '-');
     if (arr == timeUnits) {
-      return '-' + (word.includes("in") ? word : word.includes("a ") ? ",-" + word : "in-a-" + word);
+      return '-' + (word.includes("in") ? word : word.includes("a ") ? ",-" + word : word.includes("days") ? "in-" + word : "in-a-" + word);
     }
     return isLabel ? word : ('-' + word);
   }
 
   function typewrite(sentence, t) {
     if (!sentence) return;
-    console.log({sentence});
     let islandtime = 0;
     const li = document.createElement("li");
     sentence.split("").forEach((word) => {
@@ -55,7 +54,7 @@ window.addEventListener("load", () => {
     list.appendChild(label);
     
     const time = 1200;
-    typewrite(`${getRandomWord(verbs)} ${getRandomWord(prepositions, 0.4)} ${getRandomWord(nouns, 0.4)} ${getRandomWord(timeUnits, 0.7)}`, time);
+    setInterval(typewrite(`${getRandomWord(verbs)} ${getRandomWord(prepositions, 0.4)} ${getRandomWord(nouns, 0.4)} ${getRandomWord(timeUnits, 0.7)}`, time), 750);
     int = setInterval(() => {
       typewrite(`${getRandomWord(verbs)} ${getRandomWord(prepositions, 0.4)} ${getRandomWord(nouns, 0.4)} ${getRandomWord(timeUnits, 0.7)}`, time);
       listLength--;

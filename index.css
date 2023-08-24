@@ -49,16 +49,16 @@ li {
   padding: 0 0 24px 8px;
   font-size: 1.2em;
   list-style-type: auto;
-  width: 26ch;
+  width: 27ch;
   max-width: 80vw;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   white-space: break-spaces;
   hyphenate-character: '-';
   hyphens: auto;
 }
 
 li:last-child::after {
-  font-size: 28px;
+  font-weight: bold;
   content: "|";
   animation: 1s blink step-end infinite;
 }
